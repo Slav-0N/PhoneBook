@@ -34,10 +34,9 @@ class App extends Component {
   };
 
   deleteContact = (id) => {
-    const newContArr = this.state.contacts.filter(
-      (contact) => contact.id !== id
-    );
-    this.setState({ contacts: newContArr });
+    this.setState((prev) => ({
+      contacts: prev.contacts.filter((el) => el.id !== id),
+    }));
   };
 
   render() {
