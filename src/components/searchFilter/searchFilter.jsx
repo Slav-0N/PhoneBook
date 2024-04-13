@@ -5,8 +5,8 @@ class SearchFilter extends Component {
     const { filter, handleFind } = this.props;
     return (
       <input
-        name="filter"
-        id="find"
+        // name="filter"
+        // id="find"
         value={filter}
         onChange={handleFind}
       ></input>

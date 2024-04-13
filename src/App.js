@@ -4,16 +4,32 @@ import SearchFilter from "./components/searchFilter/searchFilter";
 import AddContact from "./components/addContact/addContact";
 import ContactList from "./components/contactList/contactList";
 
+// import Select from "./components/Select/Select";
+// import Reduce from "./components/Reduce/Reduce";
+const data = [
+  { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
+  { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
+  { id: "id-3", name: "Eden Clements", number: "645-17-79" },
+  { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
+];
+
 class App extends Component {
   state = {
-    contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    ],
+    contacts: [],
     filter: "",
   };
+
+  componentDidMount() {
+    JSON.parse(localStorage.getItem("buba")) &&
+    JSON.parse(localStorage.getItem("buba")).length > 0
+      ? this.setState({ contacts: JSON.parse(localStorage.getItem("buba")) })
+      : this.setState({ contacts: data });
+  }
+
+  componentDidUpdate(_, prevState) {
+    prevState.contacts !== this.state.contacts &&
+      localStorage.setItem("buba", JSON.stringify(this.state.contacts));
+  }
 
   addNewContact = (contactObj) => {
     const { contacts } = this.state;
@@ -41,15 +57,16 @@ class App extends Component {
 
   render() {
     const { contacts, filter } = this.state;
+    const { addNewContact, handleFind, deleteContact } = this;
     return (
       <div>
         <h1>PhoneBook</h1>
-        <AddContact addNewContact={this.addNewContact} />
+        <AddContact addNewContact={addNewContact} />
         <h2>Contacts</h2>
-        <SearchFilter filter={filter} handleFind={this.handleFind} />
+        <SearchFilter filter={filter} handleFind={handleFind} />
         <ContactList>
           <ContactElement
-            deleteContact={this.deleteContact}
+            deleteContact={deleteContact}
             contacts={contacts}
             filter={filter}
           />

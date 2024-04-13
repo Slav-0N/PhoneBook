@@ -10,6 +10,7 @@ class ContactElement extends Component {
 
   render() {
     const { contacts, deleteContact } = this.props;
+
     return (
       contacts.length > 0 &&
       this.filteredContacts().map((element) => (
