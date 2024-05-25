@@ -14,3 +14,15 @@ export const fetchAll = createAsyncThunk(
     }
   }
 );
+
+export const deleteOneContact = createAsyncThunk(
+  "contacts/deleteContact",
+  async (taskId, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/new_contacts/${taskId}`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
