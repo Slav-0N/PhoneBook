@@ -1,6 +1,6 @@
 import { fetchAll } from "./operations";
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteOneContact } from "./operations";
+import { deleteOneContact, addOneContact } from "./operations";
 
 const contactSlice = createSlice({
   name: "contacts",
@@ -29,8 +29,7 @@ const contactSlice = createSlice({
       .addCase(deleteOneContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        console.log("action.payload.id", action.payload.id);
-        console.log(state);
+
         const index = state.items.findIndex(
           (item) => item.id === action.payload.id
         );
@@ -39,10 +38,23 @@ const contactSlice = createSlice({
       .addCase(deleteOneContact.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(addOneContact.pending, (state, action) => {
+        console.log(action.payload);
+        state.isLoading = true;
+      })
+      .addCase(addOneContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = [...state.items, action.payload];
+      })
+      .addCase(addOneContact.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
+
+    // доделать слайс addContact
   },
 });
 
 export const contactsReducer = contactSlice.reducer;
-
-console.log("Initial state:", contactSlice.reducer(undefined, {}));
