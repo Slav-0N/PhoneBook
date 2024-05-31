@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { nanoid } from "nanoid";
 
 const AddContact = ({ addNewContact }) => {
   const [name, setName] = useState("");
@@ -22,7 +21,6 @@ const AddContact = ({ addNewContact }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const contactObj = {
-      id: nanoid(),
       name,
       number,
     };

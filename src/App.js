@@ -7,13 +7,19 @@ import { fetchAll } from "./components/redux/operations";
 import { useDispatch, useSelector } from "react-redux";
 import { addFilter } from "./components/redux/filterSlice";
 import { deleteOneContact, addOneContact } from "./components/redux/operations";
+import {
+  selectContacts,
+  selectError,
+  selectFilter,
+  selectIsLoading,
+} from "./components/redux/selectors";
 
 const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items);
-  const filter = useSelector((state) => state.filter);
-  const isLoading = useSelector((state) => state.contacts.isLoading);
-  const error = useSelector((state) => state.contacts.error);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchAll());
